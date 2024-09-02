@@ -4,9 +4,9 @@ services:
   db:
     image: postgres:latest
     environment:
-      POSTGRES_USER: exampleuser
-      POSTGRES_PASSWORD: examplepass
-      POSTGRES_DB: exampledb
+      POSTGRES_USER: omer
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: mydb
     volumes:
       - db_data:/var/lib/postgresql/data
     ports:
