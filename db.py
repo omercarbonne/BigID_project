@@ -10,6 +10,7 @@ Base = declarative_base()
 engine = create_engine(CONNECTION_STRING)
 Session = sessionmaker(bind=engine)
 
+
 class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True, index=True)
@@ -17,6 +18,7 @@ class User(Base):
 
     articles = relationship("Article", back_populates="user")
     comments = relationship("Comment", back_populates="user")
+
 
 class Article(Base):
     __tablename__ = 'articles'
@@ -27,6 +29,7 @@ class Article(Base):
 
     user = relationship("User", back_populates="articles")
     comments = relationship("Comment", back_populates="article")
+
 
 class Comment(Base):
     __tablename__ = 'comments'
@@ -39,9 +42,11 @@ class Comment(Base):
     user = relationship('User', back_populates='comments')
     article = relationship('Article', back_populates='comments')
 
+
 def innit():
     # Create all tables in the database (this is typically done only once)
     Base.metadata.create_all(bind=engine)
+
 
 def add_user(id: int, name: String) -> None:
     session = Session()
@@ -54,6 +59,7 @@ def add_user(id: int, name: String) -> None:
     finally:
         session.close()
 
+
 def add_article(id: int, title: str, body: Text, author_id: int) -> None:
     session = Session()
     try:
@@ -65,6 +71,7 @@ def add_article(id: int, title: str, body: Text, author_id: int) -> None:
     finally:
         session.close()
 
+
 def add_comment(id: int, title: str, body: Text, article_id: int, user_id: int) -> None:
     session = Session()
     try:
@@ -75,6 +82,7 @@ def add_comment(id: int, title: str, body: Text, article_id: int, user_id: int) 
         print(f"An error occurred: {e}")
     finally:
         session.close()
+
 
 def get_user(id: int) -> Optional[User]:
     session = Session()

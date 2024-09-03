@@ -15,7 +15,7 @@ services:
   api:
     build: .
     environment:
-      DATABASE_URL: postgres://exampleuser:examplepass@db:5432/exampledb
+      DATABASE_URL: postgres://omer:1234@db:5432/mydb
     ports:
       - "8000:8000"
     depends_on:
