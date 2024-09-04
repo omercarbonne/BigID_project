@@ -3,9 +3,28 @@ from pydantic import BaseModel
 from typing import List, Optional
 import db  # Import your db.py module
 
+
+def test_insertions():
+    a = db.get_user(1)
+    db.add_user(1, 'omer')
+    db.add_user(2, 'amit')
+    db.add_user(3, 'yuval')
+    db.add_user(4, 'galit')
+    db.add_user(5, 'itai')
+    db.add_article(1, 'one', '111 111 1111', 1)
+    db.add_article(2, 'two', '22 2222 222 2', 2)
+    db.add_article(3, 'three', '333 333 333', 3)
+    db.add_article(4, 'four', '444 444 444 4', 4)
+    db.add_article(5, 'five', '555 5555 555 555', 5)
+    db.add_comment(1, 'o', 'hdhdhd', 1, 1)
+    db.add_comment(2, 'o', 'hdhdhd', 1, 1)
+    db.add_comment(3, 'y', 'dfbdfb', 1, 2)
+
+
+
 app = FastAPI()
 
-# Pydantic models for request validation
+
 class UserCreate(BaseModel):
     id: int
     name: str
@@ -23,7 +42,14 @@ class CommentCreate(BaseModel):
     article_id: int
     user_id: int
 
-# API Routes
+def main():
+    #db.innit()
+    # test_insertions()
+    # a = db.get_user(4)
+    res = find_string_in_article(" ")
+
+
+
 
 @app.post("/users/", response_model=UserCreate)
 def create_user(user: UserCreate):
@@ -76,3 +102,7 @@ def find_string_in_article(search_string: str):
     if result is None:
         raise HTTPException(status_code=404, detail="String not found in any article")
     return result
+
+
+if __name__ == "__main__":
+    main()
