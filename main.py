@@ -43,10 +43,10 @@ class CommentCreate(BaseModel):
     user_id: int
 
 def main():
-    #db.innit()
-    # test_insertions()
+    # db.innit()
+    test_insertions()
     # a = db.get_user(4)
-    res = find_string_in_article(" ")
+    # res = find_string_in_article(" ")
 
 
 
