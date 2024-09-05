@@ -42,10 +42,22 @@ class Comment(Base):
     user = relationship('User', back_populates='comments')
     article = relationship('Article', back_populates='comments')
 
-def innit():
+def init():
     Base.metadata.create_all(bind=engine)
 
 def add_user(id: int, name: str) -> None:
+    """
+    Adds a new user to the database.
+
+    :param id: The unique identifier for the user.
+    :param name: The name of the user.
+
+    :return: None
+
+    :raises Exception: If an error occurs during the database operation, the session
+                        is rolled back, and the exception is raised.
+      """
+
     session = Session()
     try:
         new_user = User(id=id, name=name)
@@ -59,6 +71,19 @@ def add_user(id: int, name: str) -> None:
         session.close()
 
 def add_article(id: int, title: str, body: Text, author_id: int) -> None:
+    """
+    Adds a new article to the database.
+
+    :param id: The unique identifier for the article.
+    :param title: The title of the article.
+    :param body: The content of the article.
+    :param author_id: The unique identifier of the author who wrote the article.
+
+    :return: None
+
+    :raises Exception: If an error occurs during the database operation, the session
+                        is rolled back, and the exception is raised.
+    """
     session = Session()
     try:
         new_article = Article(id=id, title=title, body=body, author_id=author_id)
@@ -72,6 +97,20 @@ def add_article(id: int, title: str, body: Text, author_id: int) -> None:
         session.close()
 
 def add_comment(id: int, title: str, body: Text, article_id: int, user_id: int) -> None:
+    """
+    Adds a new comment to the database.
+
+    :param id: The unique identifier for the comment.
+    :param title: The title of the comment.
+    :param body: The content of the comment.
+    :param article_id: The unique identifier of the article to which the comment is associated.
+    :param user_id: The unique identifier of the user who made the comment.
+
+    :return: None
+
+    :raises Exception: If an error occurs during the database operation, the session
+                        is rolled back, and the exception is raised.
+    """
     session = Session()
     try:
         new_comment = Comment(id=id, title=title, body=body, article_id=article_id, user_id=user_id)
@@ -85,6 +124,16 @@ def add_comment(id: int, title: str, body: Text, article_id: int, user_id: int) 
         session.close()
 
 def get_user(id: int) -> Optional[User]:
+    """
+    Retrieves a user from the database by their unique identifier.
+
+    :param id: The unique identifier of the user to retrieve.
+    :return: The User object if found, otherwise None.
+    :rtype: Optional[User]
+
+    :raises Exception: If an error occurs during the database operation,
+                        it is logged and None is returned.
+    """
     session = Session()
     try:
         user = session.query(User).filter(User.id == id).one_or_none()
@@ -96,6 +145,16 @@ def get_user(id: int) -> Optional[User]:
         session.close()
 
 def get_article(id: int) -> Optional[Article]:
+    """
+    Retrieves an article from the database by its unique identifier.
+
+    :param id: The unique identifier of the article to retrieve.
+    :return: The Article object if found, otherwise None.
+    :rtype: Optional[Article]
+
+    :raises Exception: If an error occurs during the database operation,
+                        it is logged and None is returned.
+    """
     session = Session()
     try:
         article = session.query(Article).filter(Article.id == id).one_or_none()
@@ -107,6 +166,16 @@ def get_article(id: int) -> Optional[Article]:
         session.close()
 
 def get_comment(id: int) -> Optional[Comment]:
+    """
+    Retrieves a comment from the database by its unique identifier.
+
+    :param id: The unique identifier of the comment to retrieve.
+    :return: The Comment object if found, otherwise None.
+    :rtype: Optional[Comment]
+
+    :raises Exception: If an error occurs during the database operation,
+                        it is logged and None is returned.
+    """
     session = Session()
     try:
         comment = session.query(Comment).filter(Comment.id == id).one_or_none()
@@ -118,6 +187,19 @@ def get_comment(id: int) -> Optional[Comment]:
         session.close()
 
 def find_string(search_string: str) -> Optional[Result[Any]]:
+    """
+    Finds the occurrences of a given string within article bodies and returns the
+    IDs of the articles along with the exact positions of the string within those articles.
+
+    :param search_string: The string to search for within the articles.
+    :return: A list of dictionaries where each dictionary contains an 'article_id'
+             and a list of 'offsets' representing the positions of the string within the article.
+             If no matches are found, returns None.
+    :rtype: Optional[List[dict]]
+
+    :raises Exception: Raises an exception if an error occurs during the database query.
+
+    """
     session = Session()
     query = text("""
             WITH RECURSIVE find_positions AS (
