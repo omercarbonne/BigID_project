@@ -5,8 +5,11 @@ from typing import List, Optional, Any
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
+# docker connction
 CONNECTION_STRING = 'postgresql+psycopg2://omer:1234@db:5432/mydb'
-#CONNECTION_STRING = 'postgresql+psycopg2://omer:1234@localhost:5432/mydb'
+
+# local connection
+# CONNECTION_STRING = 'postgresql+psycopg2://omer:1234@localhost:5432/mydb'
 
 
 Base = declarative_base()

@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from typing import List, Optional
 import db  # Import your db.py module
 
+app = FastAPI()
 
 def test_insertions():
     a = db.get_user(1)
@@ -19,10 +20,6 @@ def test_insertions():
     db.add_comment(1, 'o', 'hdhdhd', 1, 1)
     db.add_comment(2, 'o', 'hdhdhd', 1, 1)
     db.add_comment(3, 'y', 'dfbdfb', 1, 2)
-
-
-
-app = FastAPI()
 
 
 class UserCreate(BaseModel):
@@ -43,10 +40,11 @@ class CommentCreate(BaseModel):
     user_id: int
 
 def main():
-    # db.innit()
-    test_insertions()
+    db.innit()
+    # test_insertions()
     # a = db.get_user(4)
     # res = find_string_in_article(" ")
+
 
 
 
