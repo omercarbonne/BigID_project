@@ -16,12 +16,14 @@ Base = declarative_base()
 engine = create_engine(CONNECTION_STRING)
 Session = sessionmaker(bind=engine)
 
+
 class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True, nullable=False)
     articles = relationship("Article", back_populates="user")
     comments = relationship("Comment", back_populates="user")
+
 
 class Article(Base):
     __tablename__ = 'articles'
@@ -31,6 +33,7 @@ class Article(Base):
     author_id = Column(Integer, ForeignKey('users.id'), nullable=False)
     user = relationship("User", back_populates="articles")
     comments = relationship("Comment", back_populates="article")
+
 
 class Comment(Base):
     __tablename__ = 'comments'
@@ -42,8 +45,10 @@ class Comment(Base):
     user = relationship('User', back_populates='comments')
     article = relationship('Article', back_populates='comments')
 
+
 def init():
     Base.metadata.create_all(bind=engine)
+
 
 def add_user(id: int, name: str) -> None:
     """
@@ -70,6 +75,7 @@ def add_user(id: int, name: str) -> None:
     finally:
         session.close()
 
+
 def add_article(id: int, title: str, body: Text, author_id: int) -> None:
     """
     Adds a new article to the database.
@@ -95,6 +101,7 @@ def add_article(id: int, title: str, body: Text, author_id: int) -> None:
         raise
     finally:
         session.close()
+
 
 def add_comment(id: int, title: str, body: Text, article_id: int, user_id: int) -> None:
     """
@@ -123,6 +130,7 @@ def add_comment(id: int, title: str, body: Text, article_id: int, user_id: int) 
     finally:
         session.close()
 
+
 def get_user(id: int) -> Optional[User]:
     """
     Retrieves a user from the database by their unique identifier.
@@ -143,6 +151,7 @@ def get_user(id: int) -> Optional[User]:
         return None
     finally:
         session.close()
+
 
 def get_article(id: int) -> Optional[Article]:
     """
@@ -165,6 +174,7 @@ def get_article(id: int) -> Optional[Article]:
     finally:
         session.close()
 
+
 def get_comment(id: int) -> Optional[Comment]:
     """
     Retrieves a comment from the database by its unique identifier.
@@ -185,6 +195,7 @@ def get_comment(id: int) -> Optional[Comment]:
         return None
     finally:
         session.close()
+
 
 def find_string(search_string: str) -> Optional[Result[Any]]:
     """

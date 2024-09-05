@@ -5,6 +5,7 @@ import db  # Import your db.py module
 
 app = FastAPI()
 
+
 def test_insertions():
     a = db.get_user(1)
     db.add_user(1, 'omer')
@@ -67,6 +68,7 @@ def create_user(user: UserCreate):
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error creating user: {str(e)}")
 
+
 @app.get("/users/{user_id}", response_model=UserCreate)
 def read_user(user_id: int):
     """
@@ -85,6 +87,7 @@ def read_user(user_id: int):
     if user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return user
+
 
 @app.post("/articles/", response_model=ArticleCreate)
 def create_article(article: ArticleCreate):
@@ -106,6 +109,7 @@ def create_article(article: ArticleCreate):
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error creating article: {str(e)}")
 
+
 @app.get("/articles/{article_id}", response_model=ArticleCreate)
 def read_article(article_id: int):
     """
@@ -123,6 +127,7 @@ def read_article(article_id: int):
     if article is None:
         raise HTTPException(status_code=404, detail="Article not found")
     return article
+
 
 @app.post("/comments/", response_model=CommentCreate)
 def create_comment(comment: CommentCreate):
@@ -143,6 +148,7 @@ def create_comment(comment: CommentCreate):
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error creating comment: {str(e)}")
 
+
 @app.get("/comments/{comment_id}", response_model=CommentCreate)
 def read_comment(comment_id: int):
     """
@@ -160,6 +166,7 @@ def read_comment(comment_id: int):
     if comment is None:
         raise HTTPException(status_code=404, detail="Comment not found")
     return comment
+
 
 @app.get("/find_string/")
 def find_string_in_article(search_string: str):
