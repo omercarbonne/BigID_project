@@ -27,11 +27,13 @@ class UserCreate(BaseModel):
     id: int
     name: str
 
+
 class ArticleCreate(BaseModel):
     id: int
     title: str
     body: str
     author_id: int
+
 
 class CommentCreate(BaseModel):
     id: int
