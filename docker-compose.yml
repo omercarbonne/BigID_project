@@ -11,6 +11,7 @@ services:
       - db_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    command: ["postgres", "-c", "listen_addresses=*"]
 
   pgadmin:
     image: dpage/pgadmin4:latest

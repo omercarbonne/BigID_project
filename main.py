@@ -44,10 +44,8 @@ class CommentCreate(BaseModel):
 
 
 def main():
+    # initializes the db in not initialized yet
     db.init()
-    # test_insertions()
-    # a = db.get_user(4)
-    # res = find_string_in_article(" ")
 
 
 @app.post("/users/", response_model=UserCreate)
